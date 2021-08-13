@@ -1,0 +1,21 @@
+{
+    "name": "antilop/mailjet-bundle",
+    "type": "symfony-bundle",
+    "description": "Mailjet bundle.",
+    "keywords": ["Mailjet", "Symfony"],
+    "authors": [
+        {
+            "name": "Stéphanie Tilin",
+            "email": "stephanie@antilop.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Antilop\\Bundle\\MailjetBundle\\": "src/"
+        }
+    },
+    "require": {
+        "mailjet/mailjet-apiv3-php": "^1.5",
+        "php": ">=7.1"
+    }
+}
