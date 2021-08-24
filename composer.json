@@ -15,7 +15,9 @@
         }
     },
     "require": {
-        "php": ">=7.1",
-        "mailjet/mailjet-apiv3-php": "^1.5"
-    }
+        "mailjet/mailjet-apiv3-php": "^1.5",
+        "php": ">=7.1"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
