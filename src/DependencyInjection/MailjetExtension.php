@@ -16,9 +16,7 @@ class MailjetExtension extends Extension
 
         $container->setParameter('mailjet.api_key', $config['client']['api_key']);
         $container->setParameter('mailjet.secret_key', $config['client']['api_secret_key']);
-        $container->setParameter('mailjet.sandbox', $config['sandbox']);
-        $container->setParameter('mailjet.from_email', $config['from']['email']);
-        $container->setParameter('mailjet.from_name', $config['from']['name']);
+        $container->setParameter('mailjet.templates', $config['templates']);
 
         $loader = new YamlFileLoader(
             $container,

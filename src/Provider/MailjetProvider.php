@@ -16,13 +16,24 @@ class MailjetProvider
     }
 
     public function send(
-        int $templateId,
-        string $to,
-        string $toName,
+        array $templateConfiguration,
+        array $toList,
         string $subject,
         array $vars
     )
     {
+        $templateId = $templateConfiguration['id'];
+        $templateFromEmail = $templateConfiguration['from_email'];
+        $templateFromName = $templateConfiguration['from_name'];
+
+        $tos = [];
+        foreach ($toList as $to) {
+            $tos[] = [
+                'Email' => $to['email'],
+                'Name' => $to['name'],
+            ];
+        }
+
         $client = new MailjetClient(
             $this->container->getParameter('mailjet.api_key'),
             $this->container->getParameter('mailjet.secret_key'),
@@ -34,15 +45,10 @@ class MailjetProvider
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => $this->container->getParameter('mailjet.from_email'),
-                        'Name' => $this->container->getParameter('mailjet.from_name')
+                        'Email' => $templateFromEmail,
+                        'Name' => $templateFromName
                     ],
-                    'To' => [
-                        [
-                            'Email' => $to,
-                            'Name' => $toName
-                        ]
-                    ],
+                    'To' => $tos,
                     'TemplateID' => $templateId,
                     'TemplateLanguage' => true,
                     'Subject' => $subject,
