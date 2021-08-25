@@ -54,8 +54,7 @@ class MailjetProvider
                     'Subject' => $subject,
                     'Variables' => $vars
                 ]
-            ],
-            'SandboxMode' => $this->container->getParameter('mailjet.sandbox')
+            ]
         ];
 
         $response = $client->post(
