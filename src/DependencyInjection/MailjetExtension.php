@@ -14,9 +14,12 @@ class MailjetExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        if (!empty($config)) {
+        if (!empty($config['client'])) {
             $container->setParameter('mailjet.api_key', $config['client']['api_key']);
             $container->setParameter('mailjet.secret_key', $config['client']['api_secret_key']);
+        }
+
+        if (!empty($config['templates'])) {
             $container->setParameter('mailjet.templates', $config['templates']);
         }
 
