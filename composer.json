@@ -3,6 +3,7 @@
     "type": "symfony-bundle",
     "description": "Mailjet bundle.",
     "keywords": ["Mailjet", "Symfony"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Stéphanie Tilin",
