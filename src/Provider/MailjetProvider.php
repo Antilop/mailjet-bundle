@@ -15,6 +15,15 @@ class MailjetProvider
         $this->container = $container;
     }
 
+    private function getClient($version = '3') {
+        return new MailjetClient(
+            $this->container->getParameter('mailjet.api_key'),
+            $this->container->getParameter('mailjet.secret_key'),
+            true,
+            ['version' => 'v' . $version]
+        );
+    }
+
     public function send(
         array $templateConfiguration,
         array $toList,
@@ -34,13 +43,6 @@ class MailjetProvider
             ];
         }
 
-        $client = new MailjetClient(
-            $this->container->getParameter('mailjet.api_key'),
-            $this->container->getParameter('mailjet.secret_key'),
-            true,
-            ['version' => 'v3.1']
-        );
-
         $body = [
             'Messages' => [
                 [
@@ -52,15 +54,72 @@ class MailjetProvider
                     'TemplateID' => $templateId,
                     'TemplateLanguage' => true,
                     'Subject' => $subject,
-                    'Variables' => $vars
+                    'Variables' => $vars,
                 ]
-            ]
+            ],
         ];
 
-        $response = $client->post(
+        $response = $this->getClient('3.1')->post(
             Resources::$Email,
             [
                 'body' => $body
+            ]
+        );
+
+        return $response->getData();
+    }
+
+    public function createContact($name, $email)
+    {
+        $response = $this->getClient()->post(
+            Resources::$Contact,
+            [
+                'body' => [
+                    'Name' => $name,
+                    'email' => $email
+                ]
+            ]
+        );
+
+        return $response->getData();
+    }
+
+    public function updateContactData($id, $data)
+    {
+        $response = $this->getClient()->put(
+            Resources::$Contactdata,
+            [
+                'id' => $id,
+                'body' => [
+                    'Data' => $data
+                ]
+            ]
+        );
+
+        return $response->getData();
+    }
+
+    public function manageContactsLists($id, $contactsLists)
+    {
+        $response = $this->getClient()->post(
+            Resources::$ContactManagecontactslists,
+            [
+                'id' => $id,
+                'body' => [
+                    'ContactsLists' => $contactsLists
+                ]
+            ]
+        );
+
+        return $response->getData();
+    }
+
+    public function getContactsLists($id)
+    {
+        $response = $this->getClient()->get(
+            Resources::$ContactGetcontactslists,
+            [
+                'id' => $id
             ]
         );
 
