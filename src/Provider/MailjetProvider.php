@@ -99,7 +99,7 @@ class MailjetProvider
         return $response->getData();
     }
 
-    public function manageContactsLists($id, $contactsLists)
+    public function manageContactsListsByContact($id, $contactsLists)
     {
         $response = $this->getClient()->post(
             Resources::$ContactManagecontactslists,
@@ -114,10 +114,22 @@ class MailjetProvider
         return $response->getData();
     }
 
-    public function getContactsLists($id)
+    public function getContactsListsByContact($id)
     {
         $response = $this->getClient()->get(
             Resources::$ContactGetcontactslists,
+            [
+                'id' => $id
+            ]
+        );
+
+        return $response->getData();
+    }
+
+    public function getContactsList($id)
+    {
+        $response = $this->getClient()->get(
+            Resources::$Contactslist,
             [
                 'id' => $id
             ]
