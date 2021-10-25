@@ -28,7 +28,8 @@ class MailjetProvider
         array $templateConfiguration,
         array $toList,
         string $subject,
-        array $vars
+        array $vars,
+        array $additionalProperties = null
     )
     {
         $templateId = $templateConfiguration['id'];
@@ -58,6 +59,10 @@ class MailjetProvider
                 ]
             ],
         ];
+
+        if ($additionalProperties) {
+            $body['Messages'][0] = array_merge($body['Messages'][0], $additionalProperties);
+        }
 
         $response = $this->getClient('3.1')->post(
             Resources::$Email,
